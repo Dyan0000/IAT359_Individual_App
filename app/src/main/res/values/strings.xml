@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Individual_App</string>
+    <string name="tab_1">TO-DO</string>
+    <string name="tab_2">DONE</string>
+
+    <string name="add">Add a new task to my to-do list</string>
+    <string name="back">Back to last screen</string>
+    <string name="submit">Submit this new task</string>
+</resources>
