@@ -1,34 +1,53 @@
 package com.example.individual_app
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.PagerAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity()
 {
-    val myViews: Array<Int> = arrayOf(R.layout.todo, R.layout.done)
+    val myViews: Array<Int> = arrayOf(R.layout.fragment_todo_list, R.layout.fragment_done_list)
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Click the FloatingActionButton to enter the New Task screen
+        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
+
+        fab.setOnClickListener {
+//            val intent = Intent(this,
+//                AddNewTasks::class.java)
+//            startActivity(intent)
+            val alertDialog = AlertDialog.Builder(this)
+            val textEditText = EditText(this)
+            alertDialog.setTitle("Add a New Task")
+            alertDialog.setMessage("Enter task details here.")
+            alertDialog.setView(textEditText)
+            alertDialog.show()
+        }
+
 //        val viewpager = findViewById<ViewPager2>(R.id.viewpager)
 //        viewpager.adapter = MyViewpager2Adapter (myViews, this)
         val viewpager = findViewById<ViewPager>(R.id.viewpager)
         viewpager.adapter = MyViewpagerAdapter (myViews, this)
+
+//        if ()
+//        {
+//            supportFragmentManager
+//                .beginTransaction()
+//                .add(R.id.todo_list,
+//                    TodoListFragment.newInstance(),
+//                    "todo_list").commit()
+//        }
 
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         // Link the TabLayout to ViewPager2
@@ -36,7 +55,6 @@ class MainActivity : AppCompatActivity()
 //            tab.text = "OBJECT ${(position + 1)}"
 //        }.attach()
 
-        // show the tab icon
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener
         {
             override fun onTabSelected(tab: TabLayout.Tab?)
