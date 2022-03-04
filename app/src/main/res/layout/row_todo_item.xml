@@ -12,7 +12,7 @@
     android:paddingVertical="12dp">
 
     <ImageView
-        android:id="@+id/taskTag"
+        android:id="@+id/itemTag"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_weight="0"
@@ -20,7 +20,6 @@
         app:srcCompat="@drawable/icon_work" />
 
     <LinearLayout
-        android:id="@+id/taskContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -29,7 +28,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/taskTitle"
+            android:id="@+id/itemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold_600"
@@ -38,7 +37,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/itemContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -49,7 +48,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/taskDeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -64,7 +62,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/deadline"
+            android:id="@+id/itemDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

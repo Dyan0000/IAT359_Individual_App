@@ -31,11 +31,11 @@ class MyViewpagerAdapter (private val views: Array<Int>,
         if (position == 0)
         {
             Log.d("MyViewpagerAdapter", "position is $position")
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.todo_list,
-                    TodoListFragment.newInstance(),
-                    "todo_list").commit()
+//            supportFragmentManager
+//                .beginTransaction()
+//                .add(R.id.todo_list,
+//                    TodoListFragment.newInstance(),
+//                    "todo_list").commit()
         }
         else if (position == 1)
         {
