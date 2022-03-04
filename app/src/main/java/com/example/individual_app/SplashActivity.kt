@@ -21,8 +21,8 @@ class SplashActivity : AppCompatActivity()
         val appName = findViewById<TextView>(R.id.appName)
         appName.alpha = 0f
         appLogo.alpha = 0f
-        appName.animate().setDuration(2000).alpha(1f)
-        appLogo.animate().setDuration(2000).alpha(1f).withEndAction {
+        appName.animate().setDuration(1000).alpha(1f)
+        appLogo.animate().setDuration(1000).alpha(1f).withEndAction {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)

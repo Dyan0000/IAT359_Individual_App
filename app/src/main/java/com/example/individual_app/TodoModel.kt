@@ -8,8 +8,7 @@ class TodoModel
 
     var id: String? = null
     var todoTitle: String? = null
-//    var todoContent: String? = null
-//    var todoDate: String? = null
-//    var todoTag: Int? = null
+    var todoContent: String? = null
+    var todoTag: Int? = null
     var ifDone: Boolean? = false
 }
