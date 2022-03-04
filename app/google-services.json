@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "183529051113",
+    "project_id": "dyan0000-iat359-app",
+    "storage_bucket": "dyan0000-iat359-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183529051113:android:78d4dbaf99b4e572537178",
+        "android_client_info": {
+          "package_name": "com.example.individual_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183529051113-b9u654pip9j6kqme15ks76ooetr2c0ud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ2xaS3n-Lakf-ZwZDU7lbmk0Us3zRZFs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183529051113-b9u654pip9j6kqme15ks76ooetr2c0ud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

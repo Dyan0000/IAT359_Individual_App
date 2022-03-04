@@ -24,7 +24,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/task"
+                android:id="@+id/todo_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
