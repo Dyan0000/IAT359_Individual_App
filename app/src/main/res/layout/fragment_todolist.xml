@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--  RecyclerView as the To-Do List Container  -->
+    <!--  RecyclerView as the To-Do List Container -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/todo_list"
         android:layout_width="match_parent"
@@ -15,7 +15,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:paddingTop="16dp"
+        tools:listitem="@layout/row_todo_item"/>
+
+</FrameLayout>
+
+<!--    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+

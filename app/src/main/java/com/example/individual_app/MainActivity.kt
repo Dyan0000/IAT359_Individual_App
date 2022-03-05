@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity()
 {
-    val myViews: Array<Int> = arrayOf(R.layout.fragment_todo_list, R.layout.fragment_done_list)
+    val myViews: Array<Int> = arrayOf(R.layout.fragment_todolist, R.layout.fragment_donelist)
+
     lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -101,17 +100,8 @@ class MainActivity : AppCompatActivity()
         // set up view pager
 //        val viewpager = findViewById<ViewPager2>(R.id.viewpager)
 //        viewpager.adapter = MyViewpager2Adapter (myViews, this)
-        val viewpager = findViewById<ViewPager>(R.id.viewpager)
-        viewpager.adapter = MyViewpagerAdapter (myViews, this)
-
-//        if (viewpager.adapter != null)
-//        {
-//            supportFragmentManager
-//                .beginTransaction()
-//                .add(R.id.todo_list,
-//                    TodoListFragment.newInstance(),
-//                    "todo_list").commit()
-//        }
+//        val viewpager = findViewById<ViewPager>(R.id.viewpager)
+//        viewpager.adapter = MyViewpagerAdapter (myViews, this)
 
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         // Link the TabLayout to ViewPager2
@@ -135,7 +125,22 @@ class MainActivity : AppCompatActivity()
         })
 
         // Link the TabLayout to ViewPager
-        tabLayout.setupWithViewPager(viewpager)
+//        tabLayout.setupWithViewPager(viewpager)
+
+        findViewById<Button>(R.id.refreshButton)
+            .setOnClickListener {
+                Log.d("RefreshButton", "~ clicked ~")
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.todolist_container,
+                        TodoListFragment.newInstance(),
+                        "todo_list").commit()
+            }
+//        supportFragmentManager
+//            .beginTransaction()
+//            .add(R.id.todolist_container,
+//                TodoListFragment.newInstance(),
+//                "todo_list").commit()
 
     }
 
