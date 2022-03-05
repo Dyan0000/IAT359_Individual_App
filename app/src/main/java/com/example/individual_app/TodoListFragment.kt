@@ -25,7 +25,7 @@ class TodoListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val fragment =  inflater.inflate(R.layout.fragment_todolist,
+        val fragment =  inflater.inflate(R.layout.recyclerview_todolist,
                                 container,
                                 false)
         recyclerView = fragment.findViewById<RecyclerView>(R.id.todo_list)
@@ -53,36 +53,36 @@ class TodoListFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot)
             {
                 Log.d("RefreshButton", snapshot.value.toString())
-//                todoList!!.clear()
-//                if (snapshot.exists())
-//                {
-////                    for (each in snapshot.children)
-////                    {
-////                        val itemData = each.getValue(TodoItem::class.java)
-////                        todoList.add(itemData!!)
-////                    }
-//                    val items = snapshot.children.iterator()
-//                    if (items.hasNext())
+                todoList.clear()
+                if (snapshot.exists())
+                {
+//                    for (each in snapshot.children)
 //                    {
-//                        val todoIndexedValue = items.next()
-//                        val itemsIterator = todoIndexedValue.children.iterator()
-//
-//                        while (itemsIterator.hasNext())
-//                        {
-//                            val currentItem = itemsIterator.next()
-//                            val todoItemData = TodoModel.createList()
-//                            val map = currentItem.value as HashMap<String, Any>
-//
-//                            todoItemData.id = currentItem.key
-//                            todoItemData.todoTitle = map.get("todoTitle") as String?
-//                            todoItemData.todoContent = map.get("todoContent") as String?
-//                            todoItemData.todoTag = map.get("todoTag") as Int?
-//                            todoItemData.ifDone = map.get("ifDone") as Boolean?
-//
-//                            todoList!!.add(todoItemData)
-//                        }
+//                        val itemData = each.getValue(TodoItem::class.java)
+//                        todoList.add(itemData!!)
 //                    }
-//                }
+                    val items = snapshot.children.iterator()
+                    if (items.hasNext())
+                    {
+                        val todoIndexedValue = items.next()
+                        val itemsIterator = todoIndexedValue.children.iterator()
+
+                        while (itemsIterator.hasNext())
+                        {
+                            val currentItem = itemsIterator.next()
+                            val todoItemData = TodoModel.createList()
+                            val map = currentItem.value as HashMap<*, *>
+
+                            todoItemData.id = currentItem.key
+                            todoItemData.todoTitle = map["todoTitle"] as String?
+                            todoItemData.todoContent = map["todoContent"] as String?
+                            todoItemData.todoTag = map["todoTag"] as Int?
+                            todoItemData.ifDone = map["ifDone"] as Boolean?
+
+                            todoList.add(todoItemData)
+                        }
+                    }
+                }
                 Log.d("RefreshButton", "~ done getting data ~")
             }
 

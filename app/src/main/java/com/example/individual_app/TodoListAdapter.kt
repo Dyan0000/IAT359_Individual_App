@@ -46,14 +46,14 @@ class TodoListAdapter (private val todoList: MutableList<TodoModel>):
         val inflater = LayoutInflater.from(parent.context).inflate(R.layout.row_todo_item,
                                                                    parent,
                                                                    false)
-        Log.d("RefreshButton", "~ I'm in onCreateViewHolder ~")
+        Log.d("Adapter", "~ I'm in onCreateViewHolder ~")
         return TodoListViewHolder(inflater)
     }
 
     override fun onBindViewHolder(holder: TodoListViewHolder,
                                   position: Int)
     {
-        Log.d("RefreshButton", "~ I'm in onBindViewHolder ~")
+        Log.d("Adapter", "~ I'm in onBindViewHolder ~")
         // (holder.itemView as TextView).text = arraylist[position].toString()
 
         val dataItem = todoList[position]

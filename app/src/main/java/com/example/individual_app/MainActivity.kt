@@ -1,23 +1,28 @@
 package com.example.individual_app
 
 import android.app.Dialog
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity()
 {
-    val myViews: Array<Int> = arrayOf(R.layout.fragment_todolist, R.layout.fragment_donelist)
+    val myViews: Array<Int> = arrayOf(R.layout.recyclerview_todolist, R.layout.fragment_donelist)
 
     lateinit var database: DatabaseReference
+    lateinit var databaseRetrieve: DatabaseReference
+
+//    lateinit var recyclerView : RecyclerView
+    lateinit var todoList : MutableList<TodoModel>
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -26,9 +31,7 @@ class MainActivity : AppCompatActivity()
 
         // click the FloatingActionButton to add a new task
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
-
         database = FirebaseDatabase.getInstance().reference
-
         fab.setOnClickListener {
 //            val alertDialog = AlertDialog.Builder(this)
 //            val textInput = EditText(this)
@@ -97,17 +100,7 @@ class MainActivity : AppCompatActivity()
             alertDialog.show()
         }
 
-        // set up view pager
-//        val viewpager = findViewById<ViewPager2>(R.id.viewpager)
-//        viewpager.adapter = MyViewpager2Adapter (myViews, this)
-//        val viewpager = findViewById<ViewPager>(R.id.viewpager)
-//        viewpager.adapter = MyViewpagerAdapter (myViews, this)
-
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
-        // Link the TabLayout to ViewPager2
-//        TabLayoutMediator(tabLayout, viewpager) { tab, position ->
-//            tab.text = "OBJECT ${(position + 1)}"
-//        }.attach()
 
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener
         {
@@ -124,24 +117,70 @@ class MainActivity : AppCompatActivity()
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
+        // Link the TabLayout to ViewPager2
+//        TabLayoutMediator(tabLayout, viewpager) { tab, position ->
+//            tab.text = "OBJECT ${(position + 1)}"
+//        }.attach()
+
         // Link the TabLayout to ViewPager
 //        tabLayout.setupWithViewPager(viewpager)
 
-        findViewById<Button>(R.id.refreshButton)
-            .setOnClickListener {
-                Log.d("RefreshButton", "~ clicked ~")
-                supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.todolist_container,
-                        TodoListFragment.newInstance(),
-                        "todo_list").commit()
-            }
-//        supportFragmentManager
-//            .beginTransaction()
-//            .add(R.id.todolist_container,
-//                TodoListFragment.newInstance(),
-//                "todo_list").commit()
 
+
+        // show rows of to-do items
+        val recyclerView = findViewById<RecyclerView>(R.id.todo_list)
+        recyclerView.layoutManager = LinearLayoutManager (this) // should be R.id.container
+        recyclerView.setHasFixedSize(true)
+        todoList = mutableListOf<TodoModel>()
+//        getTodoListData()
+//        recyclerView.adapter = TodoListAdapter(todoList)
+    }
+
+    private fun getTodoListData() {
+        databaseRetrieve = FirebaseDatabase.getInstance().getReference("To-do List")
+        databaseRetrieve.addValueEventListener(object : ValueEventListener
+        {
+            override fun onDataChange(snapshot: DataSnapshot)
+            {
+                Log.d("RefreshButton", snapshot.value.toString())
+                todoList.clear()
+                if (snapshot.exists())
+                {
+//                    for (each in snapshot.children)
+//                    {
+//                        val itemData = each.getValue(TodoItem::class.java)
+//                        todoList.add(itemData!!)
+//                    }
+                    val items = snapshot.children.iterator()
+                    if (items.hasNext())
+                    {
+                        val todoIndexedValue = items.next()
+                        val itemsIterator = todoIndexedValue.children.iterator()
+
+                        while (itemsIterator.hasNext())
+                        {
+                            val currentItem = itemsIterator.next()
+                            val todoItemData = TodoModel.createList()
+                            val map = currentItem.value as HashMap<*, *>
+
+                            todoItemData.id = currentItem.key
+                            todoItemData.todoTitle = map["todoTitle"] as String?
+                            todoItemData.todoContent = map["todoContent"] as String?
+                            todoItemData.todoTag = map["todoTag"] as Int?
+                            todoItemData.ifDone = map["ifDone"] as Boolean?
+
+                            todoList.add(todoItemData)
+                        }
+                    }
+                }
+                Log.d("RefreshButton", "~ done getting data ~")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 }
