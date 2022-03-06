@@ -125,12 +125,9 @@ class MainActivity : AppCompatActivity()
         // Link the TabLayout to ViewPager
 //        tabLayout.setupWithViewPager(viewpager)
 
-
-
         // show rows of to-do items
         val recyclerView = findViewById<RecyclerView>(R.id.todo_list)
-        recyclerView.layoutManager = LinearLayoutManager (this) // should be R.id.container
-        recyclerView.setHasFixedSize(true)
+//        recyclerView.layoutManager = LinearLayoutManager (this) // should be R.id.container
         todoList = mutableListOf<TodoModel>()
 //        getTodoListData()
 //        recyclerView.adapter = TodoListAdapter(todoList)
