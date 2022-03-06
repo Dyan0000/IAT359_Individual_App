@@ -101,7 +101,6 @@ class MainActivity : AppCompatActivity()
         }
 
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
-
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener
         {
             override fun onTabSelected(tab: TabLayout.Tab?)
@@ -117,17 +116,9 @@ class MainActivity : AppCompatActivity()
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        // Link the TabLayout to ViewPager2
-//        TabLayoutMediator(tabLayout, viewpager) { tab, position ->
-//            tab.text = "OBJECT ${(position + 1)}"
-//        }.attach()
-
-        // Link the TabLayout to ViewPager
-//        tabLayout.setupWithViewPager(viewpager)
-
-        // show rows of to-do items
+        // show to-do items in FrameLayout R.id.container
         val recyclerView = findViewById<RecyclerView>(R.id.todo_list)
-//        recyclerView.layoutManager = LinearLayoutManager (this) // should be R.id.container
+//        recyclerView.layoutManager = LinearLayoutManager (this) // if uncomment this line, the app will crash
         todoList = mutableListOf<TodoModel>()
 //        getTodoListData()
 //        recyclerView.adapter = TodoListAdapter(todoList)
