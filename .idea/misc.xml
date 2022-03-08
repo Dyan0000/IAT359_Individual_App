@@ -5,19 +5,22 @@
       <map>
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23333333333333334" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable/blue_gradient.xml" value="0.16342592592592592" />
+        <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable/checkbox_button.xml" value="0.1" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable/done_bg.xml" value="0.23981481481481481" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable/drop_shadow.xml" value="0.1" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.23935185185185184" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable/ic_baseline_date_range.xml" value="0.1" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.23333333333333334" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/drawable/shadow.xml" value="0.23981481481481481" />
-        <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/activity_main.xml" value="0.16203703703703703" />
+        <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/activity_splash.xml" value="0.152" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/add_new_tasks.xml" value="0.22546296296296298" />
+        <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/checkbox_button.xml" value="0.1" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/done.xml" value="0.4" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/fragment_collection_object.xml" value="0.22546296296296298" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/fragment_done.xml" value="0.1693840579710145" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/fragment_done_list.xml" value="0.10840108401084012" />
+        <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/fragment_donelist.xml" value="0.21240942028985507" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/fragment_todo.xml" value="0.1" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/fragment_todo_list.xml" value="0.21481481481481482" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/fragment_todolist.xml" value="0.22146739130434784" />
@@ -25,7 +28,7 @@
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/pager_todo.xml" value="0.264" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/recyclerview_todolist.xml" value="0.21467391304347827" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/row_number.xml" value="0.264" />
-        <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/row_todo_item.xml" value="0.264" />
+        <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/row_todo_item.xml" value="0.4" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/todo.xml" value="0.2" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/todo_item.xml" value="0.10840108401084012" />
         <entry key="..\:/Spring2022/IAT359/Individual_App/app/src/main/res/layout/viewpager.xml" value="0.264" />

@@ -14,20 +14,21 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.*
 
-class MainActivity : AppCompatActivity()
+class MainActivity : AppCompatActivity(), UpdateTodoList
 {
-    val myViews: Array<Int> = arrayOf(R.layout.recyclerview_todolist, R.layout.fragment_donelist)
+//    val myViews: Array<Int> = arrayOf(R.layout.recyclerview_todolist, R.layout.recyclerview_donelist)
 
     lateinit var database: DatabaseReference
     lateinit var databaseRetrieve: DatabaseReference
 
-//    lateinit var recyclerView : RecyclerView
+    lateinit var recyclerView : RecyclerView
     lateinit var todoList : MutableList<TodoModel>
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        databaseRetrieve = FirebaseDatabase.getInstance().getReference("To-do List")
 
         // click the FloatingActionButton to add a new task
         val fab = findViewById<View>(R.id.fab) as FloatingActionButton
@@ -117,58 +118,57 @@ class MainActivity : AppCompatActivity()
         })
 
         // show to-do items in FrameLayout R.id.container
-        val recyclerView = findViewById<RecyclerView>(R.id.todo_list)
-//        recyclerView.layoutManager = LinearLayoutManager (this) // if uncomment this line, the app will crash
+        recyclerView = findViewById<RecyclerView>(R.id.todo_list)
+        recyclerView.layoutManager = LinearLayoutManager (this)
         todoList = mutableListOf<TodoModel>()
-//        getTodoListData()
-//        recyclerView.adapter = TodoListAdapter(todoList)
+        getTodoListData()
+
+        // change the ifDone to true if checked
+
+
     }
 
-    private fun getTodoListData() {
-        databaseRetrieve = FirebaseDatabase.getInstance().getReference("To-do List")
+    private fun getTodoListData()
+    {
+//        databaseRetrieve = FirebaseDatabase.getInstance().getReference("To-do List")
+        Log.d("RetrieveData", "get reference")
+
         databaseRetrieve.addValueEventListener(object : ValueEventListener
         {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                Log.d("RefreshButton", snapshot.value.toString())
+                Log.d("RetrieveData", snapshot.value.toString())
                 todoList.clear()
+
                 if (snapshot.exists())
                 {
-//                    for (each in snapshot.children)
-//                    {
-//                        val itemData = each.getValue(TodoItem::class.java)
-//                        todoList.add(itemData!!)
-//                    }
-                    val items = snapshot.children.iterator()
-                    if (items.hasNext())
+                    Log.d("RetrieveData", "if snapshot exists: ${snapshot.exists().toString()}")
+                    for (each in snapshot.children)
                     {
-                        val todoIndexedValue = items.next()
-                        val itemsIterator = todoIndexedValue.children.iterator()
+                        Log.d("RetrieveData", "each: ${each.value.toString()}")
 
-                        while (itemsIterator.hasNext())
-                        {
-                            val currentItem = itemsIterator.next()
-                            val todoItemData = TodoModel.createList()
-                            val map = currentItem.value as HashMap<*, *>
+                        val todoItemData = each.getValue(TodoModel::class.java)
+                        Log.d("RetrieveData", "todoItemData: ${todoItemData.toString()}")
 
-                            todoItemData.id = currentItem.key
-                            todoItemData.todoTitle = map["todoTitle"] as String?
-                            todoItemData.todoContent = map["todoContent"] as String?
-                            todoItemData.todoTag = map["todoTag"] as Int?
-                            todoItemData.ifDone = map["ifDone"] as Boolean?
-
+                        if (todoItemData != null && todoItemData.ifDone == false) {
                             todoList.add(todoItemData)
                         }
                     }
-                }
-                Log.d("RefreshButton", "~ done getting data ~")
-            }
+                } // end of if (snapshot.exists())
+
+                recyclerView.adapter = TodoListAdapter(todoList)
+            } // end of onDataChange
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         })
+    }
+
+    override fun modifyItem(itemID: String?, ifDone: Boolean) {
+        val dataItem = itemID?.let { databaseRetrieve.child(it) }
+        dataItem?.child("ifDone")?.setValue(ifDone)
     }
 
 }

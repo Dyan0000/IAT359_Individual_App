@@ -10,5 +10,5 @@ class TodoModel
     var todoTitle: String? = null
     var todoContent: String? = null
     var todoTag: Int? = null
-    var ifDone: Boolean? = false
+    var ifDone: Boolean = false
 }

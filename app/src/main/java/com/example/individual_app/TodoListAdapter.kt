@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -34,9 +35,10 @@ import androidx.recyclerview.widget.RecyclerView
 //
 //}
 
-class TodoListAdapter (private val todoList: MutableList<TodoModel>):
+abstract class TodoListAdapter (private val todoList: MutableList<TodoModel>):
                       RecyclerView.Adapter<TodoListAdapter.TodoListViewHolder> ()
 {
+    private val updateTodoList : UpdateTodoList
 
     override fun getItemCount(): Int = todoList.size
 
@@ -60,13 +62,26 @@ class TodoListAdapter (private val todoList: MutableList<TodoModel>):
         holder.todoTitle.text = dataItem.todoTitle
         holder.todoContent.text = dataItem.todoContent
         holder.todoTag.id = dataItem.todoTag!!
+        holder.todoCheck.isChecked = dataItem.ifDone
+
+        holder.todoCheck.setOnClickListener {
+            updateTodoList.modifyItem(dataItem.id, !dataItem.ifDone)
+        }
+
+        when (holder.todoTag.id)
+        {
+            2131296479 -> holder.todoTag.setImageResource(R.drawable.icon_home)
+            2131296777 -> holder.todoTag.setImageResource(R.drawable.icon_study)
+            2131296778 -> holder.todoTag.setImageResource(R.drawable.icon_work)
+        }
     }
 
     class TodoListViewHolder (itemView : View) : RecyclerView.ViewHolder (itemView)
     {
-        val todoTitle = itemView.findViewById<TextView>(R.id.itemTitle)
-        val todoContent = itemView.findViewById<TextView>(R.id.itemContent)
-        val todoTag = itemView.findViewById<ImageView>(R.id.itemTag)
+        val todoTitle: TextView = itemView.findViewById<TextView>(R.id.itemTitle)
+        val todoContent: TextView = itemView.findViewById<TextView>(R.id.itemContent)
+        val todoTag: ImageView = itemView.findViewById<ImageView>(R.id.itemTag)
+        val todoCheck: CheckBox = itemView.findViewById<CheckBox>(R.id.itemCheck)
     }
 
 }

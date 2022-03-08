@@ -82,14 +82,18 @@
 <!--            android:layout_marginTop="0dp"-->
 <!--            tools:ignore="SpeakableTextPresentCheck" />-->
 
-        <FrameLayout
-            android:id="@+id/container"
+        <!--  RecyclerView as the To-Do List Container -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/todo_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/amber_100"
-            tools:layout_editor_absoluteY="681dp">
-
-        </FrameLayout>
+            android:paddingTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/row_todo_item" />
 
 </LinearLayout>
 
