@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -114,7 +113,7 @@ class MainActivity : AppCompatActivity()
         todoList = mutableListOf<TodoModel>()
         doneList = mutableListOf<TodoModel>()
         workingList = mutableListOf<TodoModel>()
-        getTodoListData()
+        getTodoListData(this)
 
         // deal with tab button actions
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
@@ -158,7 +157,7 @@ class MainActivity : AppCompatActivity()
 
     }
 
-    private fun getTodoListData()
+    private fun getTodoListData(context: Context)
     {
 //        databaseRetrieve = FirebaseDatabase.getInstance().getReference("To-do List")
         Log.d("RetrieveData", "get reference")
@@ -192,7 +191,7 @@ class MainActivity : AppCompatActivity()
                     }
                 } // end of if (snapshot.exists())
                 workingList.addAll(todoList)
-                adapter = TodoListAdapter(workingList)
+                adapter = TodoListAdapter(workingList,context)
                 recyclerView.adapter = adapter
             } // end of onDataChange
 

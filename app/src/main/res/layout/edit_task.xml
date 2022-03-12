@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/inputFields"
+    android:id="@+id/taskFields"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:layout_below="@+id/topBar"
@@ -11,16 +12,33 @@
     android:paddingVertical="16dp"
     app:layout_constraintTop_toBottomOf="@+id/topBar">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold_700"
-        android:text="NEW TASK"
-        android:textColor="@color/blue_500"
-        android:textSize="24sp" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat_bold_700"
+            android:text="EDIT TASK"
+            android:textColor="@color/blue_500"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/deleteTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/montserrat_medium_500"
+            android:text="Delete Task"
+            android:textAlignment="center"
+            android:textColor="@color/red" />
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/titleField"
+        android:id="@+id/taskTitle"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +55,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/descriptionField"
+        android:id="@+id/taskDescription"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_medium_500"
-        android:text="Choose a tag" />
+        android:text="Change the tag" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -156,18 +174,18 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/submitButton"
+        android:id="@+id/changeTask"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_bold_700"
-        android:text="Submit"
+        android:text="Change"
         android:textSize="16sp" />
 
     <Button
-        android:id="@+id/cancelButton"
+        android:id="@+id/changeCancel"
         android:layout_width="match_parent"
-        android:layout_height="48sp"
+        android:layout_height="48dp"
         android:layout_marginTop="2dp"
         android:backgroundTint="@color/grey"
         android:fontFamily="@font/montserrat_semibold_600"
