@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -14,15 +15,20 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.*
 
-class MainActivity : AppCompatActivity(), UpdateTodoList
+class MainActivity : AppCompatActivity()
 {
 //    val myViews: Array<Int> = arrayOf(R.layout.recyclerview_todolist, R.layout.recyclerview_donelist)
 
-    lateinit var database: DatabaseReference
-    lateinit var databaseRetrieve: DatabaseReference
+    lateinit var database : DatabaseReference
+    lateinit var databaseRetrieve : DatabaseReference
+
+    lateinit var fab : FloatingActionButton
 
     lateinit var recyclerView : RecyclerView
+    lateinit var adapter : TodoListAdapter
     lateinit var todoList : MutableList<TodoModel>
+    lateinit var doneList : MutableList<TodoModel>
+    lateinit var workingList : MutableList<TodoModel>
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -31,7 +37,7 @@ class MainActivity : AppCompatActivity(), UpdateTodoList
         databaseRetrieve = FirebaseDatabase.getInstance().getReference("To-do List")
 
         // click the FloatingActionButton to add a new task
-        val fab = findViewById<View>(R.id.fab) as FloatingActionButton
+        fab = findViewById<View>(R.id.fab) as FloatingActionButton
         database = FirebaseDatabase.getInstance().reference
         fab.setOnClickListener {
 //            val alertDialog = AlertDialog.Builder(this)
@@ -82,9 +88,9 @@ class MainActivity : AppCompatActivity(), UpdateTodoList
                     todoItemData.ifDone = false
 
                     // send data to Firebase
-                    val newItemData = database.child("To-do List").push()
-                    todoItemData.id = newItemData.key
-                    newItemData.setValue(todoItemData)
+                    val newItem = database.child("To-do List").push()
+                    todoItemData.id = if (newItem.key == null) "" else newItem.key!!
+                    newItem.setValue(todoItemData)
 
                     alertDialog.dismiss()
                     Toast.makeText(this,
@@ -101,6 +107,16 @@ class MainActivity : AppCompatActivity(), UpdateTodoList
             alertDialog.show()
         }
 
+        // show to-do items in FrameLayout R.id.container
+        recyclerView = findViewById<RecyclerView>(R.id.todo_list)
+        recyclerView.layoutManager = LinearLayoutManager (this)
+
+        todoList = mutableListOf<TodoModel>()
+        doneList = mutableListOf<TodoModel>()
+        workingList = mutableListOf<TodoModel>()
+        getTodoListData()
+
+        // deal with tab button actions
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener
         {
@@ -108,23 +124,37 @@ class MainActivity : AppCompatActivity(), UpdateTodoList
             {
                 tabLayout.getTabAt(0)!!.setIcon(R.drawable.icon_todo)
                 tabLayout.getTabAt(1)!!.setIcon(R.drawable.icon_done)
+
+                val selectedTab = tab?.position
+                if (selectedTab == 0)
+                {
+                    Log.d("TabBar", "TO-DO Tab")
+                    adapter.switchTo(todoList)
+                    fab.visibility = View.VISIBLE  // show fab on TO-DO tab
+                }
+                else {
+                    Log.d("TabBar", "DONE Tab")
+                    adapter.switchTo(doneList)
+                    fab.visibility = View.GONE  // hide fab on DONE tab
+                }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?)
             {
                 tabLayout.getTabAt(0)!!.setIcon(R.drawable.icon_todo)
                 tabLayout.getTabAt(1)!!.setIcon(R.drawable.icon_done)
             }
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?)
+            {
+                val selectedTab = tab?.position
+                if (selectedTab == 0) {
+                    Log.d("TabBar", "Reselect TO-DO Tab")
+                } else {
+                    Log.d("TabBar", "Reselect DONE Tab")
+                }
+            }
         })
-
-        // show to-do items in FrameLayout R.id.container
-        recyclerView = findViewById<RecyclerView>(R.id.todo_list)
-        recyclerView.layoutManager = LinearLayoutManager (this)
-        todoList = mutableListOf<TodoModel>()
-        getTodoListData()
-
-        // change the ifDone to true if checked
-
 
     }
 
@@ -139,6 +169,8 @@ class MainActivity : AppCompatActivity(), UpdateTodoList
             {
                 Log.d("RetrieveData", snapshot.value.toString())
                 todoList.clear()
+                doneList.clear()
+                workingList.clear()
 
                 if (snapshot.exists())
                 {
@@ -150,13 +182,18 @@ class MainActivity : AppCompatActivity(), UpdateTodoList
                         val todoItemData = each.getValue(TodoModel::class.java)
                         Log.d("RetrieveData", "todoItemData: ${todoItemData.toString()}")
 
-                        if (todoItemData != null && todoItemData.ifDone == false) {
+                        if (todoItemData != null && !todoItemData.ifDone!!) {
                             todoList.add(todoItemData)
+                        } else if (todoItemData != null && todoItemData.ifDone == true) {
+                            doneList.add(todoItemData)
+                        } else {
+                            Log.d("RetrieveData", "Didn't add todoItemData to any list.")
                         }
                     }
                 } // end of if (snapshot.exists())
-
-                recyclerView.adapter = TodoListAdapter(todoList)
+                workingList.addAll(todoList)
+                adapter = TodoListAdapter(workingList)
+                recyclerView.adapter = adapter
             } // end of onDataChange
 
             override fun onCancelled(error: DatabaseError) {
@@ -164,11 +201,6 @@ class MainActivity : AppCompatActivity(), UpdateTodoList
             }
 
         })
-    }
-
-    override fun modifyItem(itemID: String?, ifDone: Boolean) {
-        val dataItem = itemID?.let { databaseRetrieve.child(it) }
-        dataItem?.child("ifDone")?.setValue(ifDone)
     }
 
 }

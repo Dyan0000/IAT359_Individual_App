@@ -6,9 +6,9 @@ class TodoModel
         fun createList(): TodoModel = TodoModel()
     }
 
-    var id: String? = null
+    var id: String = ""
     var todoTitle: String? = null
     var todoContent: String? = null
     var todoTag: Int? = null
-    var ifDone: Boolean = false
+    var ifDone: Boolean? = false
 }
