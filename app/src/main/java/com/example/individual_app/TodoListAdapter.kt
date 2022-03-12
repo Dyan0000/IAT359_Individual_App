@@ -139,7 +139,6 @@ class TodoListAdapter (private val taskList: MutableList<TodoModel>,
                     data.removeValue()
                     this.notifyDataSetChanged()
 
-                    // close dialog
                     alertDialog.dismiss()
                     Toast.makeText(context,
                         "Task has been deleted.",
