@@ -12,8 +12,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#DD2C00</color>
 
+    <color name="blue_50">#E3F2FD</color>
+    <color name="blue_100">#BBDEFB</color>
     <color name="blue_200">#81D4FA</color>
     <color name="blue_500">#03A9F4</color>
+    <color name="blue_600">#1E88E5</color>
     <color name="blue_700">#0288D1</color>
     <color name="amber_100">#FFECB3</color>
     <color name="amber_200">#FFE082</color>

@@ -154,7 +154,6 @@ class MainActivity : AppCompatActivity()
                 }
             }
         })
-
     }
 
     private fun getTodoListData(context: Context)

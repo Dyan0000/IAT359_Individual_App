@@ -91,7 +91,9 @@ class TodoListAdapter (private val taskList: MutableList<TodoModel>,
             2131296778 -> holder.todoTag.setImageResource(R.drawable.icon_work)
         }
 
-        // edit an existing task & update the changes to Firebase
+        // edit an existing task
+        // 1. update new changes to Firebase
+        // 2. delete current task
         holder.todoEdit.setOnClickListener {
             Log.d("EditTask", "Start to edit * ${holder.todoTitle.text} *.")
 
