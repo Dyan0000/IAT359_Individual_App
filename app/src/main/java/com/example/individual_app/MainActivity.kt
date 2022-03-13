@@ -81,8 +81,11 @@ class MainActivity : AppCompatActivity()
                     Log.d("todoItemData", "description: ${todoItemData.todoContent}")
 
                     val checkedTag = alertDialog.findViewById<RadioGroup>(R.id.tags).checkedRadioButtonId
-                    todoItemData.todoTag = checkedTag
-                    Log.d("todoItemData", "tag: ${todoItemData.todoTag}")
+                    todoItemData.todoTagInt = checkedTag
+                    Log.d("todoItemData", "checkedTagInt: $checkedTag")
+                    val checkedTagString = resources.getResourceEntryName(checkedTag)
+                    todoItemData.todoTagString = checkedTagString
+                    Log.d("todoItemData", "checkedTagString: $checkedTagString")
 
                     todoItemData.ifDone = false
 
@@ -149,8 +152,12 @@ class MainActivity : AppCompatActivity()
                 val selectedTab = tab?.position
                 if (selectedTab == 0) {
                     Log.d("TabBar", "Reselect TO-DO Tab")
+                    adapter.switchTo(todoList)
+                    fab.visibility = View.VISIBLE  // show fab on TO-DO tab
                 } else {
                     Log.d("TabBar", "Reselect DONE Tab")
+                    adapter.switchTo(doneList)
+                    fab.visibility = View.GONE  // hide fab on DONE tab
                 }
             }
         })
@@ -178,7 +185,6 @@ class MainActivity : AppCompatActivity()
                         Log.d("RetrieveData", "each: ${each.value.toString()}")
 
                         val todoItemData = each.getValue(TodoModel::class.java)
-                        Log.d("RetrieveData", "todoItemData: ${todoItemData.toString()}")
 
                         if (todoItemData != null && !todoItemData.ifDone!!) {
                             todoList.add(todoItemData)

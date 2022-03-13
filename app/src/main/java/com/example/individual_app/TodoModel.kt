@@ -9,6 +9,7 @@ class TodoModel
     var id: String = ""
     var todoTitle: String? = null
     var todoContent: String? = null
-    var todoTag: Int? = null
+    var todoTagString: String? = null
+    var todoTagInt: Int? = null
     var ifDone: Boolean? = false
 }

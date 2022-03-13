@@ -2,6 +2,7 @@ package com.example.individual_app
 
 import android.app.Dialog
 import android.content.Context
+import android.content.res.Resources
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -49,8 +50,16 @@ class TodoListAdapter (private val taskList: MutableList<TodoModel>,
         val dataItem = taskList[position]
         holder.todoTitle.text = dataItem.todoTitle
         holder.todoContent.text = dataItem.todoContent
-        holder.todoTag.id = dataItem.todoTag!!
         holder.todoCheck.isChecked = dataItem.ifDone!!
+        holder.todoTag.id = dataItem.todoTagInt!!
+
+        // display a corresponding tag
+        when (dataItem.todoTagString)
+        {
+            "home" -> holder.todoTag.setImageResource(R.drawable.icon_home)
+            "study" -> holder.todoTag.setImageResource(R.drawable.icon_study)
+            "work" -> holder.todoTag.setImageResource(R.drawable.icon_work)
+        }
 
         val isDone = holder.todoCheck.isChecked
         Log.d("TabBar", "${dataItem.todoTitle} is checked: ${dataItem.ifDone}")
@@ -83,19 +92,11 @@ class TodoListAdapter (private val taskList: MutableList<TodoModel>,
             }
         }
 
-        // display a corresponding tag
-        when (holder.todoTag.id)
-        {
-            2131296479 -> holder.todoTag.setImageResource(R.drawable.icon_home)
-            2131296777 -> holder.todoTag.setImageResource(R.drawable.icon_study)
-            2131296778 -> holder.todoTag.setImageResource(R.drawable.icon_work)
-        }
-
         // edit an existing task
         // 1. update new changes to Firebase
         // 2. delete current task
         holder.todoEdit.setOnClickListener {
-            Log.d("EditTask", "Start to edit * ${holder.todoTitle.text} *.")
+            Log.d("EditTask", "Start to edit * ${holder.todoTitle.text} *")
 
             val alertDialog = Dialog(context)
             alertDialog.setCancelable(false)
@@ -122,7 +123,12 @@ class TodoListAdapter (private val taskList: MutableList<TodoModel>,
                     newTodoItemData.id = dataItem.id
                     newTodoItemData.todoTitle = title.editText?.text.toString()
                     newTodoItemData.todoContent = description.editText?.text.toString()
-                    newTodoItemData.todoTag = checkedTag.checkedRadioButtonId
+
+                    val checkedTagInt = checkedTag.checkedRadioButtonId
+                    newTodoItemData.todoTagInt = checkedTagInt
+                    newTodoItemData.todoTagString = holder.resource.getResourceEntryName(checkedTagInt)
+                    Log.d("EditTask", "updated tag: ${holder.resource.getResourceEntryName(checkedTagInt)}")
+
                     newTodoItemData.ifDone = holder.todoCheck.isChecked
 
                     data.setValue(newTodoItemData)
@@ -164,6 +170,8 @@ class TodoListAdapter (private val taskList: MutableList<TodoModel>,
         val todoTag : ImageView = itemView.findViewById<ImageView>(R.id.itemTag)
         val todoCheck: CheckBox = itemView.findViewById<CheckBox>(R.id.itemCheck)
         val todoEdit : LinearLayout = itemView.findViewById<LinearLayout>(R.id.itemEdit)
+
+        val resource: Resources = itemView.context.resources
     }
 
 }
